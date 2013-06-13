@@ -1,5 +1,6 @@
 var exec = require("child_process").exec;
 var querystring = require("querystring");
+var fs = require("fs");
 
 function start(response, postData) {
 	//console.log("Request handler 'start' was called.");
@@ -36,5 +37,17 @@ function upload(response, postData) {
 	response.end();
 }
 
+function responsive(response, postData) {
+    fs.readFile('./ResponsiveWeb.html', function (err, html) {
+        if (err) {
+            throw err;
+        }
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(html);
+        response.end();
+    });
+}
+
 exports.start = start;
 exports.upload = upload;
+exports.responsive = responsive;
